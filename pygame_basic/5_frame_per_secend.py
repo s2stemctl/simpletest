@@ -1,4 +1,7 @@
 import pygame
+####################################################################
+
+# 기본초기화 (반드시 해야하는것들)
 
 pygame.init() # 초기화
 
@@ -10,7 +13,11 @@ screen=pygame.display.set_mode((screen_width,screen_height))
 # 화면 타이틀 설정
 pygame.display.set_caption("mongmin game") # 게임이름
 
+# FPS
 clock=pygame.time.Clock()
+####################################################################
+
+# 1. 사용자 게임 초기화 (배경화면, 게임이미지, 좌표, 속도, 폰트 등)
 
 # 배경이미지 불러오기
 background=pygame.image.load("C:\\Users\\Mongmin\\Documents\\simpletest\\pygame_basic\\background\\bg.jpg")
@@ -52,6 +59,8 @@ running=True #  게임 진행 중인지 확인
 while running:
     dt=clock.tick(60)
     # print("fps : "+str(clock.get_fps()))
+
+    # 2. 이벤트 처리(키보드, 마우스)
     for event in pygame.event.get(): # 어떤 이벤트가 발생하였는가 ㅔ크
         if event.type == pygame.QUIT : # 창이 닫히는 이벤트가 발생하였는지
             running=False
@@ -69,10 +78,10 @@ while running:
                 to_x=0
             elif event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 to_y=0
-
+    # 3. 게임케릭터 위치 정의
     character_x_pos += to_x *dt 
     character_y_pos += to_y *dt  
-    
+    # 4. 충돌 처리
     #가로경계값처리
     if character_x_pos <0:
         character_x_pos=0
@@ -97,7 +106,8 @@ while running:
     if character_rect.colliderect(enemy_rect):
         print("충돌했어요")
         running=False
-
+    
+    # 5. 화면에 그리기
     screen.blit(background,(0,0)) # 배경그리기
     screen.blit(character,(character_x_pos,character_y_pos))
     screen.blit(enemy,(enemy_x_pos,enemy_y_pos))
